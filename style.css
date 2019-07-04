@@ -37,3 +37,7 @@
     display: inline-block;
     position: absolute;
 }
+
+.selected {
+    box-shadow: 0px 0px 0px 10px greenyellow inset;
+}
