@@ -1,0 +1,39 @@
+#game {
+    align-content: center;
+    border: 1px solid black;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 800px;
+    height: 800px;
+
+}
+
+#game div {
+    margin: 0px 0px -4px 0px;
+}
+
+.playable {
+    width: 100px;
+    height: 100px;
+    background: lightblue;
+    display: inline-block;
+    /* margin: 0px; */
+    padding: 0;
+    position: relative;
+}
+
+.none {
+    width: 100px;
+    height: 100px;
+    background: blue;
+    display: inline-block;
+    padding: 0;
+    position: relative;
+}
+
+.playable img {
+    width: 100%;
+    display: inline-block;
+    position: absolute;
+}
