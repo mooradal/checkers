@@ -125,11 +125,13 @@ function availableMoves() {
 function movePiece(from, to) {
 	pieces[from] = 0;
 	pieces[to] = turn;
-	resetElement('available');
 	resetElement('selected');
-	document.getElementsByClassName('playable')[to].onclick = function () {
-		select(this);
-	};
+	resetElement('available', () => {
+		document.getElementsByClassName('playable')[to].onclick = function () {
+			select(this);
+		};
+	});
+
 	console.log('it works')
 
 	drawPieces();
@@ -140,14 +142,13 @@ function movePiece(from, to) {
 function resetElement(elementClass, callback = () => {}) {
 
 	var elements = document.getElementsByClassName(elementClass);
+	elements[0].onclick = () => {};
 	elements[0].classList.remove(elementClass);
-
-
 	if (elements[0]) {
 		resetElement(elementClass)
 	} else {
 		callback();
-	};
+	}
 
 }
 
