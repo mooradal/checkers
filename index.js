@@ -55,11 +55,13 @@ function select(element) {
 	for (var i = 0; i < document.getElementsByClassName('available').length; i++) {
 		document.getElementsByClassName('available')[i].className = 'playable';
 	}
+
 	availableMoves();
 }
 
 function availableMoves() {
 	if (Math.floor(selectedPiece / 4) % 2 == 0) {
+		// Black
 		if (turn == 1 && pieces[selectedPiece + 4] == 0) {
 			document.getElementsByClassName('playable')[selectedPiece + 4].className = 'playable available';
 			document.getElementsByClassName('playable')[selectedPiece + 4].onclick = () => {
@@ -72,7 +74,21 @@ function availableMoves() {
 				movePiece(selectedPiece, selectedPiece + 3)
 			};
 		}
+		// Red
+		if (turn == 2 && pieces[selectedPiece - 4] == 0) {
+			document.getElementsByClassName('playable')[selectedPiece - 4].className = 'playable available';
+			document.getElementsByClassName('playable')[selectedPiece - 4].onclick = () => {
+				movePiece(selectedPiece, selectedPiece - 4)
+			};
+		}
+		if (turn == 2 && pieces[selectedPiece - 5] == 0 && selectedPiece % 4 != 3) {
+			document.getElementsByClassName('playable')[selectedPiece - 5].className = 'playable available';
+			document.getElementsByClassName('playable')[selectedPiece - 5].onclick = () => {
+				movePiece(selectedPiece, selectedPiece - 5)
+			};
+		}
 	} else {
+		// Black
 		if (turn == 1 && pieces[selectedPiece + 4] == 0) {
 			document.getElementsByClassName('playable')[selectedPiece + 4].className = 'playable available';
 			document.getElementsByClassName('playable')[selectedPiece + 4].onclick = () => {
@@ -85,38 +101,64 @@ function availableMoves() {
 				movePiece(selectedPiece, selectedPiece + 5)
 			};
 		}
-	}
+		// Red
+		if (turn == 2 && pieces[selectedPiece - 4] == 0) {
+			document.getElementsByClassName('playable')[selectedPiece - 4].className = 'playable available';
+			document.getElementsByClassName('playable')[selectedPiece - 4].onclick = () => {
+				movePiece(selectedPiece, selectedPiece - 4)
+			};
+			console.log('working')
+		}
+		if (turn == 2 && pieces[selectedPiece - 3] == 0 && selectedPiece % 4 != 3) {
+			document.getElementsByClassName('playable')[selectedPiece - 3].className = 'playable available';
+			document.getElementsByClassName('playable')[selectedPiece - 3].onclick = () => {
+				movePiece(selectedPiece, selectedPiece - 3)
+			};
 
-	console.log(pieces[selectedPiece + 4])
+		}
+	}
+	console.log(Math.floor(selectedPiece / 4) % 2 == 0)
 }
+
+
 
 function movePiece(from, to) {
 	pieces[from] = 0;
 	pieces[to] = turn;
-	clear();
+	resetElement('available');
+	resetElement('selected');
 	document.getElementsByClassName('playable')[to].onclick = function () {
 		select(this);
 	};
 	console.log('it works')
 
 	drawPieces();
+	switchTeam();
+}
 
+
+function resetElement(elementClass, callback = () => {}) {
+
+	var elements = document.getElementsByClassName(elementClass);
+	elements[0].classList.remove(elementClass);
+
+
+	if (elements[0]) {
+		resetElement(elementClass)
+	} else {
+		callback();
+	};
+
+}
+
+function switchTeam() {
+	turn = turn == 1 ? 2 : 1;
+	document.getElementById('title').innerHTML = `It's ${turn == 1 ? 'Black' : 'Red'} Turn`;
 }
 
 function main() {
 	generateBoard();
 	drawPieces();
-}
-
-function clear() {
-	for (var i of document.getElementsByClassName('selected')) {
-		i.classList.remove('selected');
-	}
-	for (var i = 0; i < document.getElementsByClassName('available').length; i++) {
-		document.getElementsByClassName('available')[i].onclick = '';
-		document.getElementsByClassName('available')[i].className = 'playable';
-	}
-
 }
 
 main();
